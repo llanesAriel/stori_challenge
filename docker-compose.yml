@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    restart: always
+    environment:
+      - POSTGRES_USER=stori
+      - POSTGRES_PASSWORD=stori
+      - POSTGRES_DB=stori
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data:/data
+    
+  function:
+    build: ./transactions_summary
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://stori:stori@db/stori
