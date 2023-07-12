@@ -11,7 +11,7 @@ RUN mkdir -p ${CSV_DIR}
 COPY ./ ${FUNCTION_DIR}
 COPY transactions_files/example.csv ${CSV_DIR}
 
-RUN pip install --no-cache-dir --target ${FUNCTION_DIR}/pip_libs  -r ${FUNCTION_DIR}/requirements.txt
+RUN pip install --no-cache-dir --target ${FUNCTION_DIR}/pip_packages -r ${FUNCTION_DIR}/requirements.txt
 
 # Use a slim version of the base Python image to reduce the final image size
 FROM python:3.11-slim
@@ -22,7 +22,7 @@ ARG CSV_DIR
 
 # ADD envs
 ENV PYTHONUNBUFFERED 1
-ENV PYTHONPATH "${PYTHONPATH}:${FUNCTION_DIR}/pip_libs"
+ENV PYTHONPATH "${PYTHONPATH}:${FUNCTION_DIR}/pip_packages"
 
 # Set working directory to function root directory
 WORKDIR ${FUNCTION_DIR}
