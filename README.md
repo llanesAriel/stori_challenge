@@ -56,8 +56,6 @@ The CSV file used for testing is the "/transactions_summary/transactions_files/e
 
     docker-compose up --build function
 
-Este comando enviara el correo a la casilla previamente configurada.
-
 ## Running on AWS Lambda
 
 IN PROGRESS....
