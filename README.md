@@ -38,7 +38,7 @@ Before starting the service, you must configure the enviroment variable on the d
 
     Edit --> docker-compose.yml
 
-You should also edit the desired email address to receive the email.
+You should also edit the desired email address to receive the email and the password (app password for GMAIL).
 To do this you must edit the user.sql file in the scripts folder of the db module:
 
     Edit --> /db/scripts/user.sql
