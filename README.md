@@ -16,6 +16,11 @@ IMAGEN
 3. Package and run code on a cloud platform like AWS. Use AWS Lambda and S3 in lieu of Docker.
 
 
+# Proyect
+
+Running this module locally will send an email to the configured email with the details of this year's transactions according to the .csv file.
+The csv file can be edited to add more transactions
+
 ## Requirements:
 
 ### Local requirements
@@ -28,7 +33,7 @@ To run the code locally it is a requirement to have the following installed
 ### AWS Requirements
 To run the code in aws it is a requirement to have the following installed
 
- - AWS 2 CLI
+ - AWS CLI 2
 
 ## Local Running
 
@@ -53,15 +58,52 @@ Este comando enviara el correo a la casilla previamente configurada.
 
 ## Running on AWS Lambda
 
+IN PROGRESS....
+
+### Create function zip
+
+Aws requires that we create a zip file with our project in order to run the additional dependencies we want to use e.g.: jinja2
+For create the zip run the command:
+
+    docker-compose run function make zip
+
+This compresses in a .zip file the function with its dependencies as aws points out in its documentation.
+
+
+### Create AWS S3 Bucket
+
+
+    aws s3api create-bucket --bucket BUCKET_NAME --region REGION
+
+
+### Create AWS DataBase
+
+    aws rds create-db-instance \
+    --db-instance-identifier DB_NAME \
+    --db-instance-class db.t2.micro \
+    --engine Postgresql \
+    --allocated-storage 5 \
+    --no-publicly-accessible \
+    --db-name afancydbname \
+    --master-username someusername \
+    --master-user-password supersecretpassword \
+    --backup-retention-period 3
+
 
 ### Create AWS Lambda Function
 
-    aws lambda update-function --function-name storiChallenge2 \
+    aws lambda update-function --function-name FUNCTION_NAME \
     --runtime python3.10 --handler txns.lambda_handler \
     --zip-file fileb://my_deployment_package.zip \
-    --role "arn:aws:iam::263384606179:role/testrol" \
+    --region REGION \
+    --role "ROLE" \
     --environment "Variables={\
-	    BUCKET=my-bucket,\
-	    FILE_NAME=file.txt}"
+	    BUCKET=BUCKET_NAME,\
+	    FILE_NAME=file.csv,\
+        RDS_DB=DB_NAME,\
+        RDS_USER=DB_USERNAME,\
+        RDS_PASSWORD=DB_PASSWORD,\
+        RDS_HOST=DB_HOST}"
 
+### Test in AWS
     IN PROGRESS....
