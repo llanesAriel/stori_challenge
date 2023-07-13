@@ -8,7 +8,9 @@ and send summary information to a user in the form of an email.
 An example file is shown below; but create your own file for the challenge. Credit transactions are
 indicated with a plus sign like +60.5. Debit transactions are indicated by a minus sign like -20.46
 
-IMAGEN
+
+![image](https://github.com/llanesAriel/stori_challenge/assets/91704220/811ceeb6-5e53-489a-829a-4528c7dd437c)
+
 
 #### Bonus points
 1. Save transaction and account info to a database
