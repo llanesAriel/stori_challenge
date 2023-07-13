@@ -7,6 +7,17 @@ import csv
 import psycopg2
 import calendar
 import json
+import logging
+
+
+if len(logging.getLogger().handlers) > 0:
+    # The Lambda environment pre-configures a handler logging to stderr. If a handler is already configured,
+    # `.basicConfig` does not execute. Thus we set the level directly.
+    logging.getLogger().setLevel(logging.INFO)
+else:
+    logging.basicConfig(level=logging.INFO)
+
+logger = logging.getLogger()
 
 
 # rds settings
@@ -31,11 +42,11 @@ def send_local_email(template):
 
     if from_email:
         msg = MIMEText(template, 'html')
-        msg['Subject'] = "test"
+        msg['Subject'] = "Account Balance - Transaction Summary"
         msg['From'] = from_email
         msg['To'] = to_email
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-            smtp_server.login(from_email, "ckdbfjsbgblfjgss")
+            smtp_server.login(from_email, getenv("GMAIL_APP_PASSWORD"))
             smtp_server.sendmail(from_email, to_email or from_email, msg.as_string())
         print("Message sent!")
     else:
@@ -77,6 +88,9 @@ def lambda_handler(event, context):
 
 
 def get_active_accounts():
+    """
+    Returns all the accounts with transactions in the actual year
+    """
 
     conn = psycopg2.connect(
         database = DB_NAME,
