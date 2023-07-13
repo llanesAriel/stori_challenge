@@ -26,5 +26,5 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgres://stori:stori@db/stori
-      - FROM_EMAIL=llanes.ariel.enrique@gmail.com
+      - FROM_EMAIL=test.email@stori.com
       - TO_EMAIL=

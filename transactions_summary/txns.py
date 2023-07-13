@@ -62,7 +62,7 @@ def send_email(s3_client, template, account):
 
 def lambda_handler(event, context):
     s3_client = boto3.client("s3")
-    csv_file = s3_client.get_object(Bucket=getenv("BUCKET"), Key="txns.csv")
+    csv_file = s3_client.get_object(Bucket=getenv("BUCKET"), Key=getenv("FILE_NAME"))
 
     # Load data from file
     load_file_txns(codecs.getreader('utf-8')(csv_file[u'Body']))
