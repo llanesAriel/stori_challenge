@@ -25,6 +25,6 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgres://stori:stori@db/stori
-      - FROM_EMAIL=llanes.ariel.enrique@gmail.com
-      - TO_EMAIL=llanes.ariel.enrique@gmail.com
-      - GMAIL_APP_PASSWORD=ckdbfjsbgblfjgss
+      - FROM_EMAIL=test.email@stori.com
+      - TO_EMAIL=
+      - GMAIL_APP_PASSWORD=
