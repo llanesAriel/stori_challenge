@@ -3,6 +3,8 @@ ARG CSV_DIR="/transactions_files"
 
 FROM python:3.10 as build-image
 
+ENV PIP_ROOT_USER_ACTION=ignore
+
 ARG FUNCTION_DIR CSV_DIR
 
 RUN mkdir -p ${FUNCTION_DIR}
@@ -11,6 +13,7 @@ RUN mkdir -p ${CSV_DIR}
 COPY ./ ${FUNCTION_DIR}
 COPY transactions_files/example.csv ${CSV_DIR}
 
+RUN pip install --upgrade pip
 RUN pip install \
     --platform manylinux2014_x86_64 \
     --implementation cp \
